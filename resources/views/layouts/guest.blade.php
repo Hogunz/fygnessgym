@@ -50,7 +50,7 @@
     }
 </style>
 
-<body class="overflow-auto w-full relative text-white">
+<body class="overflow-auto w-full relative text-white bg-slate-500">
     <div class="flex min-h-screen flex-col justify-between">
         <div>
             <header>@include('layouts.header')</header>

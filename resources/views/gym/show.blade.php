@@ -34,11 +34,35 @@
         @endfor
     </swiper-container>
     <div class="bg-black">
-        <div class="font-[500px] text-7xl pb-[18px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
+        <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
             The Best Programs We Offer For You
         </div>
-        <div class="border ">
+        <div class=" grid grid-cols-4 gap-4 pb-8 mx-auto container ">
+            @for ($i = 0; $i < 4; $i++)
+                <div class="border bg-gray-700 rounded-3xl h-[500px]">
+                    Strength Training
+                </div>
+            @endfor
+        </div>
+    </div>
 
+    <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
+        Why Should People Choose (name of the Gym)
+    </div>
+
+    <div class="bg-black">
+        <div
+            class="font-[500px] font-bold text-3xl pb-[18px] pt-[35px] text-light mx-auto container text-yellow-300 w-full">
+            Contact US
+        </div>
+        <div class="font-[500px] text-base pb-[18px] text-light mx-auto container text-yellow-300 w-full">
+            {{ $gym->phone }}
+        </div>
+        <div class="font-[500px] text-base pb-[18px] text-light mx-auto container text-yellow-300 w-full">
+            {{ $gym->email }}
+        </div>
+        <div class="font-[500px] text-base pb-[18px] text-light mx-auto container text-yellow-300 w-full">
+            {{ $gym->address }}
         </div>
     </div>
 
