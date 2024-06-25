@@ -45,11 +45,19 @@
             @endfor
         </div>
     </div>
-
-    <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
-        Why Should People Choose (name of the Gym)
-    </div>
-
+    <section class="container mx-auto">
+        <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light text-yellow-300 w-full">
+            Why Should People Choose (name of the Gym)
+        </div>
+        @for ($i = 0; $i < 4; $i++)
+            <div class="pb-8">
+                <h1 class="text-2xl tracking-wide font-bold ">Personal Training</h1>
+                <p class="text-base leading-base px-4">
+                    Lowaeawjkdhawjkdhakwjdhajkwdhajkwhdjkawhd
+                </p>
+            </div>
+        @endfor
+    </section>
     <div class="bg-black">
         <div
             class="font-[500px] font-bold text-3xl pb-[18px] pt-[35px] text-light mx-auto container text-yellow-300 w-full">
