@@ -3,14 +3,17 @@
     <div class="font-[500px] text-[42px] pb-[18px] pt-[50px] text-light mx-auto container">Exclusives
     </div>
     <div class="mt-8 mb-8 mx-auto container grid grid-cols-5 gap-6">
-        @for ($i = 0; $i < 5; $i++)
+        @foreach ($gyms as $gym)
             <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
                 <a href="#">
-                    <img class="object-scale-down h-48 w-96 p-2 " src="img/test.png" alt="" />
+                    <img class="object-scale-down h-48 w-96 p-2" src="{{ asset('storage/' . $gym->image) }}"
+                        alt="gym" />
                 </a>
+
                 <div class="p-5">
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Fygness Gym
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ $gym->name }}
                         </h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">Here are the biggest enterprise
@@ -18,7 +21,7 @@
                         acquisitions of 2021 so far, in reverse chronological order.</p>
                     <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:
                     </p>
-                    <a href="#"
+                    <a href="{{ route('gyms.showGym', $gym) }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
                         See more
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -29,7 +32,7 @@
                     </a>
                 </div>
             </div>
-        @endfor
+        @endforeach
     </div>
     <section class="container mx-auto">
         <div class="font-[500px] text-[42px] pt-[28px] pb-[4px] text-light mx-auto container">Trending Gym Places

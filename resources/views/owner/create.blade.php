@@ -21,9 +21,19 @@
         <div class="mb-5">
             <label for="inclusions" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
                 Inclusions</label>
-            <input type="text" name="inclusions" id="inclusions"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@flowbite.com" required />
+            <textarea id="inclusions" name="inclusions" rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Write your thoughts here..."></textarea>
+        </div>
+        <div class="mb-5">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                descriptions</label>
+            <textarea id="description" name="description" maxlength="150" rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Write here..."></textarea>
+            <div class="text-sm text-gray-500 dark:text-gray-400 mt-1 text-right">
+                <span id="charCount">0</span>/150 characters
+            </div>
         </div>
         <div class="mb-5">
             <label for="owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -57,3 +67,11 @@
     </form>
 
 </x-owner-layout>
+<script>
+    const textarea = document.getElementById('description');
+    const charCount = document.getElementById('charCount');
+
+    textarea.addEventListener('input', function() {
+        charCount.textContent = textarea.value.length;
+    });
+</script>

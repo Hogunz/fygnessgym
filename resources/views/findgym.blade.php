@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="max-w-screen-xl mx-auto p-4 grid grid-cols-4 gap-4">
-        @for ($i = 0; $i < 4; $i++)
+        @foreach ($gyms as $gym)
             <div
                 class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
@@ -8,11 +8,10 @@
                 </a>
                 <div class="p-5">
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Fygness Gym</h5>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ $gym->name }}</h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">Here are the biggest enterprise
-                        technology
-                        acquisitions of 2021 so far, in reverse chronological order.</p>
+                    <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">{{ $gym->description }}</p>
                     <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:
                     </p>
                     <a href="#"
@@ -26,7 +25,7 @@
                     </a>
                 </div>
             </div>
-        @endfor
+        @endforeach
     </div>
 
 </x-guest-layout>

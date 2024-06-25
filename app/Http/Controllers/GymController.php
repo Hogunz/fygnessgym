@@ -37,19 +37,20 @@ class GymController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|image',
             'owner' => 'required',
+            'description' => 'required|string|max:255',
             'email' => 'required|email',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'inclusions' => 'required|string|max:255',
         ]);
 
-        $imagePath = $request->file('image')->store('public');
-        $imageName = basename($imagePath);
+        $imagePath = $request->file('image')->store('gym', 'public');
 
         $gym = new Gym;
         $gym->name = $request->input('name');
-        $gym->image = $imageName;
+        $gym->image = $imagePath;
         $gym->owner = $request->input('owner');
+        $gym->description = $request->input('description');
         $gym->email = $request->input('email');
         $gym->address = $request->input('address');
         $gym->phone = $request->input('phone');
@@ -67,7 +68,6 @@ class GymController extends Controller
      */
     public function show(Gym $gym)
     {
-        //
     }
 
     /**
@@ -92,5 +92,23 @@ class GymController extends Controller
     public function destroy(Gym $gym)
     {
         //
+    }
+    public function findAGym()
+    {
+        $gyms = Gym::all();
+        return view(
+            'findgym',
+            compact('gyms')
+
+        );
+    }
+
+    public function showGym(Gym $gym)
+    {
+        return view(
+            'gym.show',
+            compact('gym')
+
+        );
     }
 }

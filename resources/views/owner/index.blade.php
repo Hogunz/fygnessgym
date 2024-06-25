@@ -24,6 +24,9 @@
                         Inclusion
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Description
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Owner
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -38,8 +41,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    @foreach ($gyms as $gym)
+                @foreach ($gyms as $gym)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $gym->id }}
@@ -54,6 +58,9 @@
                             {{ $gym->inclusions }}
                         </td>
                         <td class="px-6 py-4">
+                            {{ $gym->description }}
+                        </td>
+                        <td class="px-6 py-4">
                             {{ $gym->owner }}
                         </td>
                         <td class="px-6 py-4">
@@ -66,8 +73,8 @@
                             <a href="#"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         </td>
-                    @endforeach
-                </tr>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
