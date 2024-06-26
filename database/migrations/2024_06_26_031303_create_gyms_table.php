@@ -17,7 +17,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('email');
-            $table->string('inclusions');
             $table->string('description');
             $table->string('owner');
             $table->string('address');

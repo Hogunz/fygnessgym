@@ -12,7 +12,6 @@ class Gym extends Model
         'user_id',
         'name',
         'email',
-        'inclusions',
         'description',
         'owner',
         'address',
@@ -21,4 +20,9 @@ class Gym extends Model
         'start_time',
         'end_time',
     ];
+    protected $with = ['inclusion'];
+    public function inclusion()
+    {
+        return $this->hasMany(Inclusion::class);
+    }
 }

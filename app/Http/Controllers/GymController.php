@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gym;
+use App\Models\Inclusion;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +43,6 @@ class GymController extends Controller
             'email' => 'required|email',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'inclusions' => 'required|string|max:255',
         ]);
 
         $imagePath = $request->file('image')->store('gym', 'public');
@@ -54,7 +55,6 @@ class GymController extends Controller
         $gym->email = $request->input('email');
         $gym->address = $request->input('address');
         $gym->phone = $request->input('phone');
-        $gym->inclusions = $request->input('inclusions');
         //who created the gym
         $gym->user_id = Auth::id();
         $gym->save();
@@ -105,9 +105,11 @@ class GymController extends Controller
 
     public function showGym(Gym $gym)
     {
+        $inclusions = Inclusion::all();
+        $programs = Program::all();
         return view(
             'gym.show',
-            compact('gym')
+            compact('gym', 'inclusions', 'programs')
 
         );
     }

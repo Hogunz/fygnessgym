@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProgramController;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -13,6 +15,9 @@ Route::get('/findgym', function () {
 });
 
 Route::resource('gyms', GymController::class);
+
+Route::resource('inclusions', InclusionController::class);
+Route::resource('programs', ProgramController::class);
 //find a Gym
 Route::get('/findgym', [GymController::class, 'findAGym']);
 //show Gym
