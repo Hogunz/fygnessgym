@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Gym;
 use App\Models\Inclusion;
 use App\Models\Program;
+use Carbon\Carbon;
+use Faker\Provider\Lorem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +18,7 @@ class GymController extends Controller
      */
     public function index()
     {
-        $gyms = Gym::all();
+        $gyms = Auth::user()->gyms;
         return view('owner.index', compact('gyms'));
     }
 
@@ -125,5 +127,38 @@ class GymController extends Controller
             compact('gym', 'inclusions', 'programs')
 
         );
+    }
+
+    public function subscribeGym(Gym $gym)
+    {
+        $plans = [
+            [
+                'name' => 'Bronze',
+                'month' => 1,
+                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+            ],
+            [
+                'name' => 'Silver',
+                'month' => 3,
+                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+            ],
+            [
+                'name' => 'Gold',
+                'month' => 5,
+                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+            ],
+        ];
+        return view('gym.subscribe', compact('gym', 'plans'));
+    }
+
+    public function storeSubscription(Request $request, Gym $gym)
+    {
+        $user = Auth::user();
+
+        $expirationDate = Carbon::now()->addMonth((int)$request->month);
+
+        $user->subscribeGym()->attach([$gym->id => ['expiration_date' => $expirationDate]]);
+
+        return redirect()->route('dashboard');
     }
 }

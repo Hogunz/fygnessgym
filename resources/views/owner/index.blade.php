@@ -1,4 +1,4 @@
-<x-owner-layout>
+<x-app-layout>
 
 
     <div class="relative overflow-x-auto container mx-auto pt-24">
@@ -79,4 +79,4 @@
         </table>
     </div>
 
-</x-owner-layout>
+</x-app-layout>

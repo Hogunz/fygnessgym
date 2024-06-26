@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
     ];
 
     /**
@@ -49,5 +52,24 @@ class User extends Authenticatable
     public function gyms()
     {
         return $this->hasMany(Gym::class);
+    }
+
+    public function subscribeGym()
+    {
+        return $this->belongsToMany(Gym::class, 'gym_user')->withPivot(['expiration_date'])->withTimestamps()->orderByPivot('created_at', 'desc');
+    }
+
+    public function isNotSubscribed(Gym $gym)
+    {
+        $currentGym = $this->subscribeGym->find($gym);
+        if (!$currentGym) return true;
+
+        $now = Carbon::now();
+        $expirationDate = Carbon::parse($currentGym->pivot->expiration_date);
+
+        if ($expirationDate->gt($now)) {
+            return false;
+        }
+        return true;
     }
 }

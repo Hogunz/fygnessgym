@@ -19,19 +19,36 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
+
+        @hasanyrole(['owner', 'admin'])
+            @role('owner')
+                @include('layouts.owner-sidebar')
+            @endrole
+            @role('admin')
+                @include('layouts.sidebar')
+            @endrole
+        @else
+            @include('layouts.user-sidebar')
+        @endhasanyrole
+
+        {{-- @if (auth()->user()->doesntHave('roles'))
+            @include('layouts.user-sidebar')
+        @endif --}}
         {{-- @include('layouts.sidebar') --}}
         <!-- Page Heading -->
-        @isset($header)
+        {{-- @isset($header)
             <header class="bg-white dark:bg-gray-800 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
-        @endisset
+        @endisset --}}
 
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
+        <main class=" mx-auto max-w-7xl">
+            <div class="container ml-20">
+                {{ $slot }}
+            </div>
         </main>
     </div>
 </body>

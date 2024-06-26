@@ -10,6 +10,8 @@
                     <button type="button"
                         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-16 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-300 ease-in-out">Login</button>
                 </a>
+                <a href="{{ route('register.user') }}"><button type="button"
+                        class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-16 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-300 ease-in-out">Register</button></a>
             @else
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
@@ -30,6 +32,9 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>

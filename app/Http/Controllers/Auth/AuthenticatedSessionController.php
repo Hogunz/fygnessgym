@@ -28,8 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->hasRole('writer')) {
-            return redirect()->route('gyms.index');
+        if (Auth::user()->doesntHave('roles')) {
+            return redirect('/');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));

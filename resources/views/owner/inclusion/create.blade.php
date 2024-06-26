@@ -1,6 +1,5 @@
-<x-owner-layout>
-    <div class="font-[500px] text-[42px] pb-[18px] pt-[50px] text-light mx-auto container">Add Inclusion
-    </div>
+<x-app-layout>
+    <x-slot name="header">Create Inclusion</x-slot>
 
     <x-input-error :messages="$errors->all()"></x-input-error>
     <form action="{{ route('inclusions.store') }}" method="post" enctype="multipart/form-data" class="max-w-sm mx-auto">
@@ -44,7 +43,7 @@
 
 
 
-</x-owner-layout>
+</x-app-layout>
 <script>
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('charCount');

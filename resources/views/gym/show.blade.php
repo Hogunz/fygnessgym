@@ -15,8 +15,18 @@
 <x-guest-layout>
 
     <div class="bg-black">
-        <div class="font-[500px] text-7xl pb-[18px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
+        <div
+            class="font-[500px] text-7xl pb-[18px] pt-[50px] text-light mx-auto container text-yellow-300 w-full flex space-x-2 items-center">
             {{ $gym->name }}
+            @if (auth()->user() && auth()->user()->doesntHave('roles'))
+                @if (auth()->user()->isNotSubscribed($gym))
+                    <a href="{{ route('gym.subscribe', $gym) }}">
+                        <button class="text-sm border">
+                            Subscribe
+                        </button>
+                    </a>
+                @endif
+            @endif
         </div>
     </div>
     <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
