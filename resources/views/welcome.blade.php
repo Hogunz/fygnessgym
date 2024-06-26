@@ -34,7 +34,7 @@
             </div>
         @endforeach
     </div>
-    <section class="container mx-auto">
+    {{-- <section class="container mx-auto">
         <div class="font-[500px] text-[42px] pt-[28px] pb-[4px] text-light mx-auto container">Trending Gym Places
         </div>
         <div class="mt-8 mb-8 mx-auto container grid grid-cols-4 gap-6">
@@ -55,8 +55,8 @@
                 </div>
             @endfor
         </div>
-    </section>
-    <section class=" container mx-auto ">
+    </section> --}}
+    {{-- <section class=" container mx-auto ">
         <div class="flex items-center py-9 md:py-12 lg:py-24">
             <section class="bg-cover bg-center py-32 w-full rounded-lg"
                 style="
@@ -80,9 +80,6 @@
                 </div>
             </section>
         </div>
-    </section>
-    <section>
-        <div class="font-[500px] text-[42px] pb-[18px] text-light mx-auto container">GYM GOERS Stories
-        </div>
-    </section>
+    </section> --}}
+
 </x-guest-layout>

@@ -7,6 +7,7 @@ use App\Models\Inclusion;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GymController extends Controller
 {
@@ -43,10 +44,13 @@ class GymController extends Controller
             'email' => 'required|email',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
+            'gallery' => 'required|array',
+            'gallery.*' => 'image',
         ]);
 
         $imagePath = $request->file('image')->store('gym', 'public');
 
+        DB::beginTransaction();
         $gym = new Gym;
         $gym->name = $request->input('name');
         $gym->image = $imagePath;
@@ -57,7 +61,16 @@ class GymController extends Controller
         $gym->phone = $request->input('phone');
         //who created the gym
         $gym->user_id = Auth::id();
+
         $gym->save();
+        $data = [];
+        foreach ($request->file('gallery') as $gallery) {
+            $data[] = ['image_path' => $gallery->store($gym->name, 'public')];
+        }
+
+        $gym->galleries()->createMany($data);
+
+        DB::commit();
 
         return redirect()->route('gyms.index');
     }

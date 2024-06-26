@@ -25,4 +25,9 @@ class Gym extends Model
     {
         return $this->hasMany(Inclusion::class);
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }

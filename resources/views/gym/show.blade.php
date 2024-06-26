@@ -5,12 +5,7 @@
         padding-bottom: 50px;
     }
 
-    swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 400px;
-        height: 500px;
-    }
+
 
     swiper-slide img {
         display: block;
@@ -27,11 +22,11 @@
     <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
         slides-per-view="3" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
         coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
-        @for ($i = 0; $i < 4; $i++)
-            <swiper-slide>
-                <img src=" https://swiperjs.com/demos/images/nature-1.jpg" />
+        @foreach ($gym->galleries as $gallery)
+            <swiper-slide class="object-cover bg-cover bg-no-repeat">
+                <img src="{{ asset('storage/' . $gallery->image_path) }}" />
             </swiper-slide>
-        @endfor
+        @endforeach
     </swiper-container>
     <div class="bg-black">
         <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light mx-auto container text-yellow-300 w-full">
