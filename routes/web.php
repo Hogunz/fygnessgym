@@ -1,13 +1,17 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -20,15 +24,7 @@ Route::get('/checkin/list', function () {
 Route::get('/checkin/list/create', function () {
     return view('/owner/checkin/create');
 });
-Route::get('/announcement', function () {
-    return view('/owner/announcement/index');
-});
-Route::get('/announcement/create', function () {
-    return view('/owner/announcement/create');
-});
-Route::get('/trainer/index', function () {
-    return view('/owner/trainer/index');
-});
+
 Route::get('/task/index', function () {
     return view('/owner/task/index');
 });
@@ -62,6 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('inclusions', InclusionController::class);
         Route::resource('programs', ProgramController::class);
         Route::resource('customers', CustomerController::class);
+        Route::resource('announcements', AnnouncementController::class);
+        Route::resource('trainers', TrainerController::class);
+        Route::resource('tasks', TaskController::class);
     });
 
     Route::get('/showGym/{gym}/subscribe', [GymController::class, 'subscribeGym'])->name('gym.subscribe');

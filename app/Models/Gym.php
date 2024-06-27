@@ -30,4 +30,12 @@ class Gym extends Model
     {
         return $this->hasMany(Gallery::class);
     }
+    public function announcement()
+    {
+        return $this->hasMany(Announcement::class);
+    }
+    public function trainers()
+    {
+        return $this->hasMany(Announcement::class);
+    }
 }
