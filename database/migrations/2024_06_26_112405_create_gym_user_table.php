@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gym_user', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('gym_id');
             $table->foreignId('user_id');
-            $table->date('expiration_date');
+            $table->date('expiration_date')->nullable();
+            $table->string('status')->default('pending');
+            $table->integer('plan');
             $table->timestamps();
         });
     }

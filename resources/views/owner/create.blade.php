@@ -94,7 +94,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="text" name="email" id="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Product brand" required="">
+                            placeholder="Enter your Email" required="">
                     </div>
                     <div class="w-full">
                         <label for="owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Owner
@@ -108,7 +108,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
                         <input type="text" name="address" id="address"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Product brand" required="">
+                            placeholder="Type your address" required="">
                     </div>
                     <div class="w-full">
                         <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone

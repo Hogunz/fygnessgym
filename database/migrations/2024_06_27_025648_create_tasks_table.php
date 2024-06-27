@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id');
+            $table->string('workout');
+            $table->string('task');
+            $table->text('description');
             $table->timestamps();
         });
     }

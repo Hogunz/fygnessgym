@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gym;
-use App\Models\Inclusion;
-use App\Models\Program;
 use Carbon\Carbon;
+use App\Models\Gym;
+use App\Models\GymUser;
+use App\Models\Program;
+use App\Models\Inclusion;
 use Faker\Provider\Lorem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class GymController extends Controller
 {
@@ -108,27 +109,18 @@ class GymController extends Controller
     {
         //
     }
+
+
     public function findAGym()
     {
         $gyms = Gym::all();
-        return view(
-            'findgym',
-            compact('gyms')
-
-        );
+        return view('findgym', compact('gyms'));
     }
-
     public function showGym(Gym $gym)
     {
         $inclusions = Inclusion::where('gym_id', $gym->id)->get();
-
-
         $programs = Program::where('gym_id', $gym->id)->get();
-        return view(
-            'gym.show',
-            compact('gym', 'inclusions', 'programs')
-
-        );
+        return view('gym.show', compact('gym', 'inclusions', 'programs'));
     }
 
     public function subscribeGym(Gym $gym)
@@ -157,9 +149,12 @@ class GymController extends Controller
     {
         $user = Auth::user();
 
-        $expirationDate = Carbon::now()->addMonth((int)$request->month);
-
-        $user->subscribeGym()->attach([$gym->id => ['expiration_date' => $expirationDate]]);
+        // $user->subscribeGym()->attach([$gym->id => ['plan' => $request->month]]);
+        GymUser::create([
+            'gym_id' => $gym->id,
+            'user_id' => $user->id,
+            'plan' => $request->month,
+        ]);
 
         return redirect()->route('dashboard');
     }

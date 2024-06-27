@@ -15,24 +15,12 @@ use App\Http\Controllers\TaskController;
 
 Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/users/list', function () {
-    return view('/owner/users/index');
-});
 Route::get('/checkin/list', function () {
     return view('/owner/checkin/index');
 });
 Route::get('/checkin/list/create', function () {
     return view('/owner/checkin/create');
 });
-
-Route::get('/task/index', function () {
-    return view('/owner/task/index');
-});
-Route::get('/task/create', function () {
-    return view('/owner/task/create');
-});
-
-
 
 Route::get('/register/user', [UserController::class, 'registerUser'])->name("register.user");
 Route::post('/register/user', [UserController::class, 'store'])->name('register.store');
@@ -57,14 +45,18 @@ Route::middleware('auth')->group(function () {
         Route::resource('gyms', GymController::class);
         Route::resource('inclusions', InclusionController::class);
         Route::resource('programs', ProgramController::class);
+        Route::get('/customers/{gymUser}/update-status', [CustomerController::class, 'updateStatus'])->name('customer.update-status');
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
         Route::resource('trainers', TrainerController::class);
         Route::resource('tasks', TaskController::class);
+        Route::get('/add-task', [CustomerController::class, 'addTask'])->name('customers.addTask');
     });
 
     Route::get('/showGym/{gym}/subscribe', [GymController::class, 'subscribeGym'])->name('gym.subscribe');
-    Route::get('/showGym/{gym}/subscribe/store', [GymController::class, 'storeSubscription'])->name('subscribe.store');
+    Route::post('/showGym/{gym}/subscribe', [GymController::class, 'storeSubscription'])->name('subscribe.store');
+
+    Route::get('/user/announcements/show', [AnnouncementController::class, 'showAnnouncements'])->name('user.announcements');
 });
 
 require __DIR__ . '/auth.php';

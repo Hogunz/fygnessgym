@@ -54,22 +54,36 @@ class User extends Authenticatable
         return $this->hasMany(Gym::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'owner_id');
+    }
+
     public function subscribeGym()
     {
-        return $this->belongsToMany(Gym::class, 'gym_user')->withPivot(['expiration_date'])->withTimestamps()->orderByPivot('created_at', 'desc');
+        return $this->hasMany(GymUser::class);
     }
 
     public function isNotSubscribed(Gym $gym)
     {
-        $currentGym = $this->subscribeGym->find($gym);
-        if (!$currentGym) return true;
+        $gymUser = $this->subscribeGym()->where('gym_id', $gym->id)->latest()->first();
 
-        $now = Carbon::now();
-        $expirationDate = Carbon::parse($currentGym->pivot->expiration_date);
+        // Check if $gymUser is null before accessing its properties
+        if ($gymUser === null) {
+            return true;
+        }
 
-        if ($expirationDate->gt($now)) {
+        if ($gymUser->status == 'pending') {
             return false;
         }
-        return true;
+
+        $expirationDate = Carbon::parse($gymUser->expiration_date);
+        $isExpired = Carbon::now()->greaterThan($expirationDate);
+
+        if ($isExpired) {
+            return true;
+        }
+
+        return false;
     }
 }

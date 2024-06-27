@@ -13,6 +13,8 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $tasks = Auth::user()->tasks;
+        return view('owner.task.index', compact('tasks'));
     }
 
     /**
@@ -20,6 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
+        return view('owner.task.create');
     }
 
     /**
@@ -27,6 +30,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'workout' => ['required'],
+            'task' => ['required'],
+            'description' => ['required']
+        ]);
+
+        Task::create([
+            'owner_id' => Auth::id(),
+            'workout' => $request->workout,
+            'task' => $request->task,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -58,6 +75,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }

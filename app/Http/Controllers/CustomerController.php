@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Gym;
+use App\Models\Task;
 use App\Models\User;
+use App\Models\GymUser;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -14,7 +18,32 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::doesntHave('roles')->get();
+        $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
+
+
+
+        $customers = GymUser::whereIn('gym_id', $gymIds)->get();
+
+        // foreach ($gyms as $gym) {
+        //     foreach ($gym->customers as $customer) {
+        //         $expirationDate = Carbon::parse($customer->pivot->expiration_date);
+        //         $isExpired = Carbon::now()->greaterThan($expirationDate);
+        //         $status = $customer->pivot->status;
+        //         if (!$isExpired || $status == 'pending') {
+        //             $customers[] = [
+        //                 'id' => $customer->id,
+        //                 'name' => $customer->name,
+        //                 'phone_number' => $customer->phone_number,
+        //                 'expiration_date' => $customer->pivot->expiration_date,
+        //                 'gym_id' => $gym->id,
+        //                 'gym_name' => $gym->name,
+        //                 'plan' => $customer->pivot->plan,
+        //                 'status' => $status,
+        //             ];
+        //         }
+        //     }
+        // }
+
         return view('owner.customers.index', compact('customers'));
     }
 
@@ -64,5 +93,48 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+    public function updateStatus(Request $request, GymUser $gymUser)
+    {
+        $gymUser->update([
+            'status' => $request->status,
+            'expiration_date' => $request->status == 'rejected' ? null : Carbon::now()->addMonth($gymUser->plan),
+        ]);
+
+        return back();
+    }
+
+    public function addTask()
+    {
+
+        $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
+        $customers = GymUser::whereIn('gym_id', $gymIds)->get();
+        return view('owner.customers.create', compact('customers'));
+    }
+    public function createTask()
+    {
+
+        $user = Auth::user(); // Or retrieve the specific user as needed
+        return view('owner.task.create', compact('user'));
+    }
+    public function storeTask(Request $request)
+    {
+        $request->validate([
+            'workout' => ['required'],
+            'task' => ['required'],
+            'description' => ['required'],
+            'user_id' => ['required', 'exists:users,id']
+        ]);
+
+        Task::create([
+            'owner_id' => Auth::id(),
+            'workout' => $request->workout,
+            'task' => $request->task,
+            'description' => $request->description,
+            'user_id' => $request->user_id // Save the user ID
+        ]);
+
+        return redirect()->route('tasks.index');
     }
 }

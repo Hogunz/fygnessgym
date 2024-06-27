@@ -15,7 +15,6 @@ class AnnouncementController extends Controller
     {
         $userId = auth()->id();
 
-
         $announcements = Announcement::whereHas('gym', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->get();
@@ -83,5 +82,16 @@ class AnnouncementController extends Controller
     public function destroy(Announcement $announcement)
     {
         //
+    }
+
+    public function showAnnouncements()
+    {
+        $user = Auth::user();
+
+        $gymOwnersId = $user->subscribeGym->pluck('id');
+
+        $announcements = Announcement::whereIn('gym_id', $gymOwnersId)->get();
+
+        return view('user.announcement', compact('announcements'));
     }
 }

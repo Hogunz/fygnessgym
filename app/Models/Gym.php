@@ -38,4 +38,9 @@ class Gym extends Model
     {
         return $this->hasMany(Announcement::class);
     }
+
+    public function customers()
+    {
+        return $this->hasMany(GymUser::class);
+    }
 }
