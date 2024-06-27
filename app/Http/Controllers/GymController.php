@@ -114,7 +114,10 @@ class GymController extends Controller
     public function findAGym()
     {
         $gyms = Gym::all();
-        return view('findgym', compact('gyms'));
+        foreach ($gyms as $gym) {
+            $subscriptionCounts[$gym->id] = GymUser::where('gym_id', $gym->id)->count();
+        }
+        return view('findgym', compact('gyms', 'subscriptionCounts'));
     }
     public function showGym(Gym $gym)
     {
@@ -155,7 +158,7 @@ class GymController extends Controller
             'user_id' => $user->id,
             'plan' => $request->month,
         ]);
-
-        return redirect()->route('dashboard');
+        $subscriptionCount = GymUser::where('gym_id', $gym->id)->count();
+        return redirect()->route('dashboard')->with('subscriptionCount', $subscriptionCount);
     }
 }

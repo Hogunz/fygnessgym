@@ -104,37 +104,4 @@ class CustomerController extends Controller
 
         return back();
     }
-
-    public function addTask()
-    {
-
-        $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
-        $customers = GymUser::whereIn('gym_id', $gymIds)->get();
-        return view('owner.customers.create', compact('customers'));
-    }
-    public function createTask()
-    {
-
-        $user = Auth::user(); // Or retrieve the specific user as needed
-        return view('owner.task.create', compact('user'));
-    }
-    public function storeTask(Request $request)
-    {
-        $request->validate([
-            'workout' => ['required'],
-            'task' => ['required'],
-            'description' => ['required'],
-            'user_id' => ['required', 'exists:users,id']
-        ]);
-
-        Task::create([
-            'owner_id' => Auth::id(),
-            'workout' => $request->workout,
-            'task' => $request->task,
-            'description' => $request->description,
-            'user_id' => $request->user_id // Save the user ID
-        ]);
-
-        return redirect()->route('tasks.index');
-    }
 }

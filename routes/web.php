@@ -25,6 +25,11 @@ Route::get('/checkin/list/create', function () {
 Route::get('/register/user', [UserController::class, 'registerUser'])->name("register.user");
 Route::post('/register/user', [UserController::class, 'store'])->name('register.store');
 
+
+
+
+
+
 //find a Gym
 Route::get('/findgym', [GymController::class, 'findAGym']);
 //show Gym
@@ -49,13 +54,18 @@ Route::middleware('auth')->group(function () {
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
         Route::resource('trainers', TrainerController::class);
+
+        Route::get('/tasks/create-task/', [TaskController::class, 'addTask'])->name('customers.create-task');
+        Route::post('/tasks/store-task/', [TaskController::class, 'storeTask'])->name('customers.store-task');
         Route::resource('tasks', TaskController::class);
-        Route::get('/add-task', [CustomerController::class, 'addTask'])->name('customers.addTask');
     });
+
 
     Route::get('/showGym/{gym}/subscribe', [GymController::class, 'subscribeGym'])->name('gym.subscribe');
     Route::post('/showGym/{gym}/subscribe', [GymController::class, 'storeSubscription'])->name('subscribe.store');
 
+    //user
+    Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');
     Route::get('/user/announcements/show', [AnnouncementController::class, 'showAnnouncements'])->name('user.announcements');
 });
 

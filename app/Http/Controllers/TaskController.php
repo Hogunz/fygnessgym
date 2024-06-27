@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gym;
 use App\Models\Task;
+use App\Models\GymUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,5 +80,28 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('tasks.index');
+    }
+
+    //user
+    public function viewTask()
+    {
+        $user = Auth::user();
+
+        $gymOwnersId = $user->subscribeGym->pluck('id');
+
+        $tasks = Task::whereIn('owner_id', $gymOwnersId)->get();
+
+        return view('user.tasks', compact('tasks'));
+    }
+    public function addTask()
+    {
+
+        $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
+        $customers = GymUser::whereIn('gym_id', $gymIds)->get();
+        return view('owner.customers.create', compact('customers'));
+    }
+
+    public function storeTask(Request $request)
+    {
     }
 }

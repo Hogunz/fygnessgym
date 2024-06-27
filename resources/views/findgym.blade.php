@@ -12,7 +12,11 @@
                             {{ $gym->name }}</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">{{ $gym->description }}</p>
-                    <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:
+                    <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:@if (isset($subscriptionCounts[$gym->id]))
+                            {{ $subscriptionCounts[$gym->id] }}
+                        @else
+                            0
+                        @endif
                     </p>
                     <a href="{{ route('gyms.showGym', $gym) }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
