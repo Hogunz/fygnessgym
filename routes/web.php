@@ -17,11 +17,23 @@ Route::get('/users/list', function () {
 Route::get('/checkin/list', function () {
     return view('/owner/checkin/index');
 });
+Route::get('/checkin/list/create', function () {
+    return view('/owner/checkin/create');
+});
 Route::get('/announcement', function () {
     return view('/owner/announcement/index');
 });
 Route::get('/announcement/create', function () {
     return view('/owner/announcement/create');
+});
+Route::get('/trainer/index', function () {
+    return view('/owner/trainer/index');
+});
+Route::get('/task/index', function () {
+    return view('/owner/task/index');
+});
+Route::get('/task/create', function () {
+    return view('/owner/task/create');
 });
 
 

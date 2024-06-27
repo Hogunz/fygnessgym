@@ -20,14 +20,14 @@ class UsersSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
         ]);
-        $writer = User::create([
-            'name' => 'writer',
-            'email' => 'writer@gmail.com',
-            'password' => Hash::make('writer'),
+        $owner = User::create([
+            'name' => 'owner',
+            'email' => 'owner@gmail.com',
+            'password' => Hash::make('owner'),
         ]);
 
-        Role::create(['name' => 'writer']);
-        $writer->assignRole('writer');
+        Role::create(['name' => 'owner']);
+        $owner->assignRole('owner');
 
         Role::create(['name' => 'admin']);
         $adminUser->assignRole('admin');

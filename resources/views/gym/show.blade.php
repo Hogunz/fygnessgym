@@ -48,7 +48,7 @@
                     <h1 class="text-2xl pb-4">
                         {{ $inclusion->title }}
                     </h1>
-                    <p class="px-4"> {{ $inclusion->title }}
+                    <p class="px-4"> {{ $inclusion->description }}
                     </p>
                 </div>
             @endforeach

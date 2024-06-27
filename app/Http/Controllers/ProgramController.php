@@ -14,7 +14,11 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        $programs = Program::all();
+        $userId = auth()->id();
+        $programs = Program::whereHas('gym', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+        // $programs = Program::all();
         return view('owner.program.index', compact('programs'));
     }
 

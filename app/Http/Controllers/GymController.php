@@ -120,8 +120,10 @@ class GymController extends Controller
 
     public function showGym(Gym $gym)
     {
-        $inclusions = Inclusion::all();
-        $programs = Program::all();
+        $inclusions = Inclusion::where('gym_id', $gym->id)->get();
+
+
+        $programs = Program::where('gym_id', $gym->id)->get();
         return view(
             'gym.show',
             compact('gym', 'inclusions', 'programs')

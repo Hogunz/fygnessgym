@@ -14,7 +14,12 @@ class InclusionController extends Controller
      */
     public function index()
     {
-        $inclusions = Inclusion::all();
+        $userId = auth()->id();
+
+
+        $inclusions = Inclusion::whereHas('gym', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
         return view('owner.inclusion.index', compact('inclusions'));
     }
 
