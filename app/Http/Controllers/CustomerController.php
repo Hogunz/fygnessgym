@@ -20,8 +20,6 @@ class CustomerController extends Controller
     {
         $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
 
-
-
         $customers = GymUser::whereIn('gym_id', $gymIds)->get();
 
         // foreach ($gyms as $gym) {
@@ -103,5 +101,11 @@ class CustomerController extends Controller
         ]);
 
         return back();
+    }
+    public function usersIndex()
+    {
+    }
+    public function markAttendance(Request $request, $id)
+    {
     }
 }

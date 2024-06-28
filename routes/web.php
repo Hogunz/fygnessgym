@@ -13,7 +13,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\OwnerdashboardController;
+
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -54,6 +54,13 @@ Route::middleware('auth')->group(function () {
         Route::resource('inclusions', InclusionController::class);
         Route::resource('programs', ProgramController::class);
         Route::get('/customers/{gymUser}/update-status', [CustomerController::class, 'updateStatus'])->name('customer.update-status');
+
+
+        //check-in users
+
+
+
+
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
         Route::resource('trainers', TrainerController::class);
