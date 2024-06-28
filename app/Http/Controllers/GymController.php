@@ -165,8 +165,9 @@ class GymController extends Controller
 
     public static function ownerDashboard()
     {
-
+        $currentDate = Carbon::now();
+        $subscribedUsersCount = GymUser::where('expiration_date', '>', $currentDate)->count();
         $pendingUsersCount = GymUser::where('status', 'pending')->count();
-        return view('owner.dashboard', compact('pendingUsersCount'));
+        return view('owner.dashboard', compact('pendingUsersCount', 'subscribedUsersCount'));
     }
 }
