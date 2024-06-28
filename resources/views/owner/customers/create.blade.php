@@ -4,7 +4,7 @@
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create Task</h2>
             <form action="{{ route('customers.store-task') }}" method="post">
                 @csrf
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6" x-data="workouts">
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                     <div class="mb-5">
                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -12,9 +12,7 @@
                         <select name="workout" id="workout" x-model="selectedWorkout"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option value="">Select...</option>
-                            <template x-for="(workout, index) in workouts">
-                                <option :value="workout" x-text="workout"></option>
-                            </template>
+                            <option :value="workout"></option>
                         </select>
                     </div>
                 </div>
@@ -25,40 +23,7 @@
             </form>
         </div>
     </section>
-</x-app-layout>
+    <section>
 
-<script>
-    function workouts() {
-        return {
-            workouts: [
-                'Body', 'Arms', 'Legs'
-            ],
-            tasks: [{
-                    id: 'Body',
-                    tasks: [
-                        'Push Up', 'Sit up', 'Pull Up',
-                    ]
-                },
-                {
-                    id: 'Arms',
-                    tasks: [
-                        'Push Up',
-                    ]
-                },
-                {
-                    id: 'Legs',
-                    tasks: [
-                        'Squats',
-                    ]
-                }
-            ],
-            selectedWorkout: '',
-            getTasks() {
-                const tasks = this.tasks.filter(t => {
-                    return t.id == this.selectedWorkout
-                })[0]
-                return tasks.tasks
-            },
-        }
-    }
-</script>
+    </section>
+</x-app-layout>

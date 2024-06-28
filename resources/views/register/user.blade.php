@@ -2,7 +2,7 @@
     <section class="bg-black/50">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-yellow-300 uppercase">
-                <img class="w-12 h-12 mr-2 rounded-full" src="img/logo.jpg" alt="logo">
+                <img class="w-12 h-12 mr-2 rounded-full" src="../img/logo.jpg" alt="logo">
                 Fygness Gym
             </a>
             <div
@@ -34,8 +34,14 @@
                         <!-- Phone Number -->
                         <div class="mt-4">
                             <x-input-label for="phone_number" :value="__('Phone Number')" />
-                            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number"
-                                placeholder="9299021923" :value="old('phone_number')" required autocomplete="username" />
+                            <div class="flex">
+                                <span
+                                    class="inline-block py-2 px-4 bg-gray-200 border border-gray-300 border-r-0">+63</span>
+                                <input id="phone_number" class="block w-full py-2 px-4 border border-gray-300 rounded-r"
+                                    type="text" name="phone_number" placeholder="9299021923"
+                                    :value="old('phone_number')" required autocomplete="username" />
+                            </div>
+
                             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
                         </div>
 

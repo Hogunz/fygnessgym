@@ -1,47 +1,17 @@
- <x-app-layout>
+<x-app-layout>
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">My Tasks</h2>
 
-     <div class="relative overflow-x-auto container mx-auto pt-24">
+        @foreach ($tasks as $task)
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg mb-4 p-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $task->workout }}</h3>
+                <p class="text-gray-700 dark:text-gray-300">{{ $task->task }}</p>
+                <p class="text-gray-700 dark:text-gray-300">{{ $task->description }}</p>
+            </div>
+        @endforeach
 
-         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-
-             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                 <tr>
-                     <th scope="col" class="px-6 py-3">
-                         Gym
-                     </th>
-                     <th scope="col" class="px-6 py-3">
-                         Title
-                     </th>
-                     <th scope="col" class="px-6 py-3">
-                         Description
-                     </th>
-
-                     <th scope="col" class="px-6 py-3">
-                         Created at
-                     </th>
-                 </tr>
-             </thead>
-             <tbody>
-                 @foreach ($tasks as $task)
-                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
-                         <th scope="row"
-                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                             {{ $task->workout }}
-                         </th>
-                         <td class="px-6 py-4">
-                             {{ $task->task }}
-                         </td>
-                         <td class="px-6 py-4">
-                             {{ $task->description }}
-                         </td>
-                         <td class="px-6 py-4">
-                             {{ $announcement->created_at->format('F d, Y h:i a') }}
-                         </td>
-
-                     </tr>
-                 @endforeach
-             </tbody>
-         </table>
-     </div>
- </x-app-layout>
+        @if ($tasks->isEmpty())
+            <p class="text-gray-700 dark:text-gray-300">No tasks found.</p>
+        @endif
+    </div>
+</x-app-layout>

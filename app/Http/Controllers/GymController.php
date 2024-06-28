@@ -161,4 +161,12 @@ class GymController extends Controller
         $subscriptionCount = GymUser::where('gym_id', $gym->id)->count();
         return redirect()->route('dashboard')->with('subscriptionCount', $subscriptionCount);
     }
+
+
+    public static function ownerDashboard()
+    {
+
+        $pendingUsersCount = GymUser::where('status', 'pending')->count();
+        return view('owner.dashboard', compact('pendingUsersCount'));
+    }
 }

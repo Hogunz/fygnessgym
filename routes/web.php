@@ -1,9 +1,11 @@
 <?php
 
 
+use App\Models\Ownerdashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
@@ -11,7 +13,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\OwnerdashboardController;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //Gym
     Route::group(['middleware' => ['role:owner']], function () {
+        Route::get('/owner/dashboard/', [GymController::class, 'ownerDashboard'])->name('owner.dashboard');
         Route::resource('gyms', GymController::class);
         Route::resource('inclusions', InclusionController::class);
         Route::resource('programs', ProgramController::class);
@@ -63,6 +66,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/showGym/{gym}/subscribe', [GymController::class, 'subscribeGym'])->name('gym.subscribe');
     Route::post('/showGym/{gym}/subscribe', [GymController::class, 'storeSubscription'])->name('subscribe.store');
+
 
     //user
     Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');

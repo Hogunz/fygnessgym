@@ -16,19 +16,6 @@
                         Goal! Navigate effortlessly to your ideal gym and work on your fitness objectives with
                         precision. Let Fygness Go be the way to find your ultimate fitness destination!"</p>
                 </div>
-                <div class="mt-12 w-full">
-
-                    <a href="#gyms"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
-                        Know More
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-
-                    </a>
-                </div>
             </div>
 
             <div class="columns-2 max-w-2xl">
