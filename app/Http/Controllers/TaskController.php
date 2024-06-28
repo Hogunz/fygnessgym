@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Gym;
 use App\Models\Task;
 use App\Models\GymUser;
+use App\Models\TaskUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,22 +88,38 @@ class TaskController extends Controller
     public function viewTask()
     {
         $user = Auth::user();
+        $tasks = collect([]);
 
-        $gymOwnersId = $user->subscribeGym->pluck('id');
+        $gymUser = GymUser::where('user_id', $user->id)->where('status', 'approved')->whereDate('expiration_date', '>', Carbon::now()->format('Y-m-d'))->latest()->first();
 
-        $tasks = Task::whereIn('owner_id', $gymOwnersId)->get();
+        if ($gymUser) {
+            $tasks = $gymUser->userTasks;
+        }
 
-        return view('user.tasks', compact('tasks'));
+        return view('user.tasks', compact('tasks', 'gymUser'));
     }
-    public function addTask()
+    public function addTask(GymUser $gymUser)
     {
+        $tasks = Task::where('owner_id', Auth::id())->get();
 
-        $gymIds = Gym::where('user_id', Auth::id())->get()->pluck('id');
-        $customers = GymUser::whereIn('gym_id', $gymIds)->get();
-        return view('owner.customers.create', compact('customers'));
+        return view('owner.customers.create', compact('gymUser', 'tasks'));
     }
 
-    public function storeTask(Request $request)
+    public function storeTask(Request $request, GymUser $gymUser)
     {
+        $gymUser->userTasks()->create([
+            'task_id' => $request->task_id,
+        ]);
+
+        return redirect()->route('customers.create-task', $gymUser);
+    }
+
+    public function updateTask(TaskUser $taskUser)
+    {
+        $taskUser->update([
+            'status' => 'done',
+        ]);
+
+        return redirect()->route('customers.create-task', $taskUser->gymUser);
     }
 }

@@ -26,4 +26,9 @@ class GymUser extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function userTasks()
+    {
+        return $this->hasMany(TaskUser::class);
+    }
 }

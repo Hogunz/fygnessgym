@@ -42,7 +42,7 @@
                                 <a
                                     href="{{ route('customer.update-status', ['gymUser' => $customer['id'], 'status' => 'rejected']) }}">Reject</a>
                             @endif
-                            <a href="{{ route('customers.create-task') }}">View</a>
+                            <a href="{{ route('customers.create-task', $customer->id) }}">View</a>
                         </td>
                     </tr>
                 @endforeach

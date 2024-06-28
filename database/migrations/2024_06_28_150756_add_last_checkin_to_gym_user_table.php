@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('owner_id');
-            $table->foreignId('gym_id');
-            $table->foreignId('user_id');
-            $table->timestamps();
+        Schema::table('gym_user', function (Blueprint $table) {
+            $table->timestamp('last_checkin')->nullable()->after('status');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::table('gym_user', function (Blueprint $table) {
+            $table->dropColumn('last_checkin');
+        });
     }
 };

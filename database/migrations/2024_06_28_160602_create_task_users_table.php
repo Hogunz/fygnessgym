@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('task_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id');
-            $table->foreignId('gym_id');
-            $table->foreignId('user_id');
+            $table->foreignId('gym_user_id');
+            $table->foreignId('task_id');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('task_users');
     }
 };
