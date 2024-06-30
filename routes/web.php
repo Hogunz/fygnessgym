@@ -13,7 +13,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\AnnouncementController;
-
+use App\Models\Announcement;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
+
+
+
         Route::resource('trainers', TrainerController::class);
 
         Route::get('/tasks/create-task/{gymUser}', [TaskController::class, 'addTask'])->name('customers.create-task');
@@ -68,6 +71,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/showGym/{gym}/subscribe', [GymController::class, 'subscribeGym'])->name('gym.subscribe');
     Route::post('/showGym/{gym}/subscribe', [GymController::class, 'storeSubscription'])->name('subscribe.store');
+    //admin
+    Route::get('/showStaff', [TrainerController::class, 'showStaff'])->name('admin.showStaff');
+    Route::get('/showUser', [UserController::class, 'showUser'])->name('admin.showUser');
+    Route::get('/showAnnouncement', [AnnouncementController::class, 'showAnnouncement'])->name('admin.showAnnouncement');
+    Route::get('/showGym', [GymController::class, 'showAdminGym'])->name('admin.showGym');
+    Route::get('/activity-log', [UserController::class, 'showActivityLog'])->name('admin.showActivityLog');
+    //admin dashboard
+    Route::get('/owner/dashboard/', [UserController::class, 'adminDashboard'])->name('admin.dashboard');
 
     //user
     Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');

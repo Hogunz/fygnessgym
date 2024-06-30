@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Carbon\Carbon;
 use App\Models\Gym;
 use App\Models\GymUser;
@@ -49,6 +50,7 @@ class GymController extends Controller
             'phone' => 'required|string|max:255',
             'gallery' => 'required|array',
             'gallery.*' => 'image',
+            'google_map_link' => 'nullable|string',
         ]);
 
         $imagePath = $request->file('image')->store('gym', 'public');
@@ -62,6 +64,7 @@ class GymController extends Controller
         $gym->email = $request->input('email');
         $gym->address = $request->input('address');
         $gym->phone = $request->input('phone');
+        $gym->google_map_link = $request->input('google_map_link');
         //who created the gym
         $gym->user_id = Auth::id();
 
@@ -132,17 +135,17 @@ class GymController extends Controller
             [
                 'name' => 'Bronze',
                 'month' => 1,
-                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+                'description' => "Jumpstart your fitness journey with our 1-Month Package, featuring full facility access, diverse classes, and personalized trainer support."
             ],
             [
                 'name' => 'Silver',
                 'month' => 3,
-                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+                'description' => "Commit to fitness with our 3-Month Package. Enjoy premium equipment, various classes, and fitness consultations."
             ],
             [
                 'name' => 'Gold',
                 'month' => 5,
-                'description' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos iure tempore atque veritatis ex corrupti molestiae cumque sapiente dolorem mollitia. Officia possimus iste doloremque nulla error nesciunt impedit nam ipsum."
+                'description' => "Achieve lasting fitness with our 5-Month Package. Access all facilities, exclusive classes, training sessions, and wellness programs."
             ],
         ];
         return view('gym.subscribe', compact('gym', 'plans'));
@@ -163,11 +166,22 @@ class GymController extends Controller
     }
 
 
-    public static function ownerDashboard()
+    public static function ownerDashboard(Gym $gym)
     {
+
+        $userId = auth()->id();
+        $announcementCount = Announcement::whereHas('gym', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->count();
         $currentDate = Carbon::now();
         $subscribedUsersCount = GymUser::where('expiration_date', '>', $currentDate)->count();
         $pendingUsersCount = GymUser::where('status', 'pending')->count();
-        return view('owner.dashboard', compact('pendingUsersCount', 'subscribedUsersCount'));
+
+        return view('owner.dashboard', compact('pendingUsersCount', 'subscribedUsersCount', 'announcementCount'));
+    }
+    public function showAdminGym()
+    {
+        $gyms = Gym::all();
+        return view('admin.gyms', compact('gyms'));
     }
 }

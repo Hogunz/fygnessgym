@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="relative overflow-x-auto container mx-auto pt-24">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table class="bg-white w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
@@ -28,21 +28,23 @@
             </thead>
             <tbody>
                 @foreach ($customers as $customer)
-                    <tr>
-                        <td>{{ $customer->gym->name }}</td>
-                        <td>{{ $customer->user->name }}</td>
-                        <td>{{ $customer->user->phone_number }}</td>
-                        <td>{{ $customer->expiration_date }}</td>
-                        <td>{{ $customer->plan }} Month/s</td>
-                        <td>{{ $customer->status }}</td>
-                        <td>
+                    <tr class="text-black">
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $customer->gym->name }}</th>
+                        <td class="px-6 py-4">{{ $customer->user->name }}</td>
+                        <td class="px-6 py-4">{{ $customer->user->phone_number }}</td>
+                        <td class="px-6 py-4">{{ $customer->expiration_date }}</td>
+                        <td class="px-6 py-4">{{ $customer->plan }} Month/s</td>
+                        <td class="px-6 py-4">{{ $customer->status }}</td>
+                        <td class="px-6 py-4">
                             @if ($customer->status == 'pending')
                                 <a
                                     href="{{ route('customer.update-status', ['gymUser' => $customer['id'], 'status' => 'approved']) }}">Approve</a>
                                 <a
                                     href="{{ route('customer.update-status', ['gymUser' => $customer['id'], 'status' => 'rejected']) }}">Reject</a>
                             @endif
-                            <a href="{{ route('customers.create-task', $customer->id) }}">View</a>
+                            <a class="hover:underline text-green-600"
+                                href="{{ route('customers.create-task', $customer->id) }}">Assign Task</a>
                         </td>
                     </tr>
                 @endforeach

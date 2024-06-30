@@ -82,6 +82,8 @@ class InclusionController extends Controller
      */
     public function destroy(Inclusion $inclusion)
     {
-        //
+        $inclusion->delete();
+
+        return redirect()->route('inclusions.index');
     }
 }

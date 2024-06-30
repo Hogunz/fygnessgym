@@ -37,7 +37,7 @@ class TrainerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'task' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
         ]);
 
@@ -82,5 +82,11 @@ class TrainerController extends Controller
     public function destroy(Trainer $trainer)
     {
         //
+    }
+    public function showStaff()
+    {
+        $user = Auth::user();
+        $trainers = Trainer::all();
+        return view('admin.trainer', compact('trainers'));
     }
 }

@@ -94,4 +94,9 @@ class AnnouncementController extends Controller
 
         return view('user.announcement', compact('announcements'));
     }
+    public function showAnnouncement()
+    {
+        $announcements = Announcement::all();
+        return view('admin.announcement', compact('announcements'));
+    }
 }

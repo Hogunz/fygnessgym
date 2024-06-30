@@ -43,4 +43,11 @@ class Gym extends Model
     {
         return $this->hasMany(GymUser::class);
     }
+    public function setEmbedGoogleMapAttribute($value)
+    {
+
+        preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $value, $match);
+
+        $this->attributes['embed_google_map'] = $match[0][0];
+    }
 }

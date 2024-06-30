@@ -57,7 +57,6 @@ class ProgramController extends Controller
      */
     public function show(Program $program)
     {
-        //
     }
 
     /**
@@ -81,6 +80,8 @@ class ProgramController extends Controller
      */
     public function destroy(Program $program)
     {
-        //
+        $program->delete();
+
+        return redirect()->route('programs.index');
     }
 }

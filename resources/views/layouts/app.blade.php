@@ -15,42 +15,60 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<style>
+    body {
+        background-image: url('img/bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        /* Overlay */
+        position: relative;
+    }
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
+    /* Overlay style */
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
 
-        @hasanyrole(['owner', 'admin'])
-            @role('owner')
-                @include('layouts.owner-sidebar')
-            @endrole
-            @role('admin')
-                @include('layouts.sidebar')
-            @endrole
-        @else
-            @include('layouts.user-sidebar')
-        @endhasanyrole
+    main {
+        font-family: 'Montserrat', sans-serif;
+    }
+</style>
 
-        {{-- @if (auth()->user()->doesntHave('roles'))
-            @include('layouts.user-sidebar')
-        @endif --}}
-        {{-- @include('layouts.sidebar') --}}
-        <!-- Page Heading -->
-        {{-- @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
+<body class="overflow-auto w-full h-full relative dark:text-white bg-slate-500">
+    @include('layouts.navigation')
+    <div class="min-h-screen flex flex-col justify-between">
+        <div class=" ">
+            <header> @hasanyrole(['owner', 'admin'])
+                    @role('owner')
+                        @include('layouts.owner-sidebar')
+                    @endrole
+                    @role('admin')
+                        @include('layouts.sidebar')
+                    @endrole
+                @else
+                    @include('layouts.user-sidebar')
+                @endhasanyrole
             </header>
-        @endisset --}}
-
-        <!-- Page Content -->
-        <main class=" mx-auto max-w-7xl">
-            <div class="container ml-20">
+            <main class=" mx-auto max-w-7xl">
                 {{ $slot }}
-            </div>
-        </main>
+            </main>
+        </div>
+        <!-- Page Content -->
+
+        <div>
+            @include('layouts.footer')
+        </div>
     </div>
+
 </body>
 
 </html>

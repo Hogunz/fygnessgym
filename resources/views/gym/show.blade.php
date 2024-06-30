@@ -14,14 +14,15 @@
 </style>
 <x-guest-layout>
 
-    <div class="bg-black">
+    <div class="bg-black flex ">
         <div
-            class="font-[500px] text-7xl pb-[18px] pt-[50px] text-light mx-auto container text-yellow-300 w-full flex space-x-2 items-center">
+            class="font-[500px] text-7xl pb-[18px] justify-between pt-[50px] text-light mx-auto container text-yellow-300 w-full flex space-x-2 items-center">
             {{ $gym->name }}
             @if (auth()->user() && auth()->user()->doesntHave('roles'))
                 @if (auth()->user()->isNotSubscribed($gym))
                     <a href="{{ route('gym.subscribe', $gym) }}">
-                        <button class="text-sm border">
+                        <button
+                            class="text-lg border-red-600 rounded-lg p-2 hover:bg-yellow-300 hover:text-black transition duration-300 ease-in-out ">
                             Subscribe
                         </button>
                     </a>
@@ -48,11 +49,11 @@
         </div>
         <div class=" grid grid-cols-4 gap-4 pb-8 mx-auto container ">
             @foreach ($inclusions as $inclusion)
-                <div class="border bg-gray-700 rounded-3xl h-[300px] p-4">
-                    <h1 class="text-2xl pb-4">
+                <div class="border-transparent bg-gray-700 text-white rounded-3xl h-[300px] p-4">
+                    <h1 class="text-2xl pb-4 font-bold leading-6 px-14 pt-16 ">
                         {{ $inclusion->title }}
                     </h1>
-                    <p class="px-4"> {{ $inclusion->description }}
+                    <p class="px-4 text-base"> {{ $inclusion->description }}
                     </p>
                 </div>
             @endforeach
@@ -62,14 +63,21 @@
         <div class="font-[500px] text-7xl  pb-[40px] pt-[50px] text-light text-yellow-300 w-full">
             Why Should People Choose {{ $gym->name }}
         </div>
-        @foreach ($programs as $program)
-            <div class="pb-8">
-                <h1 class="text-2xl tracking-wide font-bold ">{{ $program->title }}</h1>
-                <p class="text-base leading-base px-4">
-                    {{ $program->description }}
-                </p>
+
+        <div class="flex items-center">
+            <div class="pb-8 w-1/2 ">
+                @foreach ($programs as $program)
+                    <h1 class="text-3xl tracking-wide font-bold leading-6 text-white mb-5 ">{{ $program->title }}</h1>
+                    <p class="text-lg leading-base tracking-wide text-white px-4 mb-5">
+                        {{ $program->description }}
+                    </p>
+                @endforeach
             </div>
-        @endforeach
+            <div>
+                <img class=" w-80 h-full object-cover ml-48" src="../img/1.png" alt="">
+            </div>
+        </div>
+
     </section>
     <div class="bg-black flex flex-col">
         <div class="flex container mx-auto justify-between">
@@ -118,9 +126,8 @@
             </div>
             <div class="flex">
 
-                <iframe class="p-6"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.4934641617083!2d120.32209777579182!3d16.039862840222074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33915d005112c1c3%3A0x3d56bbabace42b65!2sAnytime%20Fitness%20Dagupan%20City!5e0!3m2!1sen!2sph!4v1719359703501!5m2!1sen!2sph"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                <iframe class="p-6" src="{{ $gym->google_map_link }}" width="600" height="450"
+                    style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>

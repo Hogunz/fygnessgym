@@ -20,7 +20,12 @@
                     <th scope="col" class="px-6 py-3">
                         Description
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                    <th scope="col" class="px-6 py-3">
 
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +46,14 @@
                         <td class="px-6 py-4">
                             <a href="#"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                        <td class="flex items-center px-6 py-4">
+                            <form action="{{ route('inclusions.destroy', $inclusion) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button
+                                    class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
