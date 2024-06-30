@@ -64,7 +64,8 @@ class ProgramController extends Controller
      */
     public function edit(Program $program)
     {
-        //
+        $gyms = Auth::user()->gyms;
+        return view('owner.program.edit', compact('program', 'gyms'));
     }
 
     /**
@@ -72,7 +73,18 @@ class ProgramController extends Controller
      */
     public function update(Request $request, Program $program)
     {
-        //
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $program->title = $request->input('title');
+        $program->description = $request->input('description');
+        $program->gym_id = $request->input('gym_id');
+        $program->save();
+
+        return redirect()->route('programs.index');
     }
 
     /**

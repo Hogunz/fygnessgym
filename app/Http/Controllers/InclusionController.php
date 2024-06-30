@@ -66,7 +66,8 @@ class InclusionController extends Controller
      */
     public function edit(Inclusion $inclusion)
     {
-        //
+        $gyms = Auth::user()->gyms;
+        return view('owner.inclusion.edit', compact('inclusion', 'gyms'));
     }
 
     /**
@@ -74,7 +75,17 @@ class InclusionController extends Controller
      */
     public function update(Request $request, Inclusion $inclusion)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $inclusion->title = $request->input('title');
+        $inclusion->description = $request->input('description');
+        $inclusion->gym_id = $request->input('gym_id');
+        $inclusion->save();
+
+        return redirect()->route('inclusions.index');
     }
 
     /**

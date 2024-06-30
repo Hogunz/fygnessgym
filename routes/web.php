@@ -29,6 +29,7 @@ Route::post('/register/user', [UserController::class, 'store'])->name('register.
 
 //find a Gym
 Route::get('/findgym', [GymController::class, 'findAGym']);
+Route::get('/searchGym', [GymController::class, 'searchGym'])->name('search.gym');
 //show Gym
 Route::get('/showGym/{gym}', [GymController::class, 'showGym'])->name('gyms.showGym');
 
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //Gym
     Route::group(['middleware' => ['role:owner']], function () {
-        Route::get('/owner/dashboard/', [GymController::class, 'ownerDashboard'])->name('owner.dashboard');
+        Route::get('/owner/dashboard', [GymController::class, 'ownerDashboard'])->name('owner.dashboard');
         Route::resource('gyms', GymController::class);
         Route::resource('inclusions', InclusionController::class);
         Route::resource('programs', ProgramController::class);
@@ -78,7 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/showGym', [GymController::class, 'showAdminGym'])->name('admin.showGym');
     Route::get('/activity-log', [UserController::class, 'showActivityLog'])->name('admin.showActivityLog');
     //admin dashboard
-    Route::get('/owner/dashboard/', [UserController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard/', [UserController::class, 'adminDashboard'])->name('admin.dashboard');
 
     //user
     Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');

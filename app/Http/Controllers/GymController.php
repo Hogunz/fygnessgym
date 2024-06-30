@@ -94,7 +94,7 @@ class GymController extends Controller
      */
     public function edit(Gym $gym)
     {
-        //
+        return view('owner.edit', compact('gym'));
     }
 
     /**
@@ -102,7 +102,47 @@ class GymController extends Controller
      */
     public function update(Request $request, Gym $gym)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image',
+            'owner' => 'required',
+            'description' => 'required|string|max:255',
+            'email' => 'required|email',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image',
+            'google_map_link' => 'nullable|string',
+        ]);
+
+        DB::beginTransaction();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('gym', 'public');
+            $gym->image = $imagePath;
+        }
+
+        $gym->name = $request->input('name');
+        $gym->owner = $request->input('owner');
+        $gym->description = $request->input('description');
+        $gym->email = $request->input('email');
+        $gym->address = $request->input('address');
+        $gym->phone = $request->input('phone');
+        $gym->google_map_link = $request->input('google_map_link');
+        $gym->save();
+
+        if ($request->hasFile('gallery')) {
+            $data = [];
+            foreach ($request->file('gallery') as $gallery) {
+                $data[] = ['image_path' => $gallery->store($gym->name, 'public')];
+            }
+
+            $gym->galleries()->createMany($data);
+        }
+
+        DB::commit();
+
+        return redirect()->route('gyms.index');
     }
 
     /**
@@ -117,6 +157,7 @@ class GymController extends Controller
     public function findAGym()
     {
         $gyms = Gym::all();
+        $subscriptionCounts = [];
         foreach ($gyms as $gym) {
             $subscriptionCounts[$gym->id] = GymUser::where('gym_id', $gym->id)->count();
         }
@@ -162,7 +203,12 @@ class GymController extends Controller
             'plan' => $request->month,
         ]);
         $subscriptionCount = GymUser::where('gym_id', $gym->id)->count();
-        return redirect()->route('dashboard')->with('subscriptionCount', $subscriptionCount);
+        return redirect()->route('dashboard')->with([
+
+            'subscriptionCount' => $subscriptionCount,
+            'successMessage' => 'Subscription created successfully!',
+
+        ]);
     }
 
 
@@ -183,5 +229,17 @@ class GymController extends Controller
     {
         $gyms = Gym::all();
         return view('admin.gyms', compact('gyms'));
+    }
+    public function searchGym(Request $request)
+    {
+        $query = $request->input('query');
+
+        if ($query) {
+            $gyms = Gym::where('name', 'like', '%' . $query . '%')->get();
+        } else {
+            $gyms = Gym::all();
+        }
+
+        return view('findgym', compact('gyms', 'query'));
     }
 }

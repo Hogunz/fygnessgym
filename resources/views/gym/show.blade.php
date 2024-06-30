@@ -33,6 +33,12 @@
                 @endif
             @endif
         </div>
+        @if (session('successMessage'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                role="alert">
+                {{ session('successMessage') }}
+            </div>
+        @endif
     </div>
     <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
         slides-per-view="3" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"

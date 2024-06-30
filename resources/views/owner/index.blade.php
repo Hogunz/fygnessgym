@@ -21,9 +21,6 @@
                         Email
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Inclusion
-                    </th>
-                    <th scope="col" class="px-6 py-3">
                         Description
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -55,9 +52,6 @@
                             {{ $gym->email }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $gym->inclusions }}
-                        </td>
-                        <td class="px-6 py-4">
                             {{ $gym->description }}
                         </td>
                         <td class="px-6 py-4">
@@ -70,7 +64,7 @@
                             {{ $gym->address }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#"
+                            <a href="{{ route('gyms.edit', $gym) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         </td>
                     </tr>
