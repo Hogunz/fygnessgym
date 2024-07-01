@@ -43,6 +43,12 @@ class Gym extends Model
     {
         return $this->hasMany(GymUser::class);
     }
+
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
     public function setEmbedGoogleMapAttribute($value)
     {
 

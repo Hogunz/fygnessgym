@@ -1,28 +1,28 @@
 <x-app-layout>
-
-
     <section class="bg-white mt-5 dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16  ">
-            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Inclusion</h2>
+        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Inclusion</h2>
             <x-input-error :messages="$errors->all()"></x-input-error>
-            <form action="{{ route('inclusions.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('inclusions.update', $inclusion->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-2">
                         <label for="title"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Inclusions</label>
                         <input type="text" name="title" id="title"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Type your inclusions" required="">
+                            placeholder="Type your inclusions" value="{{ old('title', $inclusion->title) }}" required>
                     </div>
 
                     <div>
-                        <label for="category"
+                        <label for="gym_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                        <select name="gym_id" id="title"
+                        <select name="gym_id" id="gym_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @foreach ($gyms as $gym)
-                                <option value="{{ $gym->id }}">{{ $gym->name }}</option>
+                                <option value="{{ $gym->id }}"
+                                    {{ $gym->id == $inclusion->gym_id ? 'selected' : '' }}>{{ $gym->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -32,7 +32,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                         <textarea id="description" name="description" maxlength="150" rows="4"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Your description here"></textarea>
+                            placeholder="Your description here">{{ old('description', $inclusion->description) }}</textarea>
                         <div class="text-sm text-gray-500 dark:text-gray-400 mt-1 text-right">
                             <span id="charCount">0</span>/150 characters
                         </div>
@@ -47,11 +47,12 @@
     </section>
 
 </x-app-layout>
+
 <script>
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('charCount');
-
     textarea.addEventListener('input', function() {
         charCount.textContent = textarea.value.length;
     });
+    charCount.textContent = textarea.value.length;
 </script>

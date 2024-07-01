@@ -23,7 +23,7 @@
         @endforeach
 
         @if ($tasks->isEmpty())
-            <p class="text-gray-700 dark:text-gray-300">No tasks found.</p>
+            <p class="text-white">No tasks found.</p>
         @endif
     </div>
 </x-app-layout>

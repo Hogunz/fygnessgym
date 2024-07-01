@@ -13,6 +13,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\PlanController;
 use App\Models\Announcement;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -51,6 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('programs', ProgramController::class);
         Route::get('/customers/{gymUser}/update-status', [CustomerController::class, 'updateStatus'])->name('customer.update-status');
 
+        Route::resource('plans', PlanController::class);
 
         //check-in users
         Route::get('/users-index', [CustomerController::class, 'usersIndex'])->name('customers.check-in');
@@ -58,8 +60,6 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
-
-
 
         Route::resource('trainers', TrainerController::class);
 
@@ -83,7 +83,8 @@ Route::middleware('auth')->group(function () {
 
     //user
     Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');
-    Route::get('/user/announcements/show', [AnnouncementController::class, 'showAnnouncements'])->name('user.announcements');
+    Route::get('/user/announcements/show', [AnnouncementController::class, 'userAnnouncements'])->name('user.announcements');
+    Route::get('/user/gym-subscription', [GymController::class, 'viewSubscription'])->name('user.viewSubscription');
 });
 
 require __DIR__ . '/auth.php';

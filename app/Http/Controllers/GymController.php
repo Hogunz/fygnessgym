@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Announcement;
 use Carbon\Carbon;
 use App\Models\Gym;
+use App\Models\Plan;
 use App\Models\GymUser;
 use App\Models\Program;
 use App\Models\Inclusion;
 use Faker\Provider\Lorem;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -172,24 +173,7 @@ class GymController extends Controller
 
     public function subscribeGym(Gym $gym)
     {
-        $plans = [
-            [
-                'name' => 'Bronze',
-                'month' => 1,
-                'description' => "Jumpstart your fitness journey with our 1-Month Package, featuring full facility access, diverse classes, and personalized trainer support."
-            ],
-            [
-                'name' => 'Silver',
-                'month' => 3,
-                'description' => "Commit to fitness with our 3-Month Package. Enjoy premium equipment, various classes, and fitness consultations."
-            ],
-            [
-                'name' => 'Gold',
-                'month' => 5,
-                'description' => "Achieve lasting fitness with our 5-Month Package. Access all facilities, exclusive classes, training sessions, and wellness programs."
-            ],
-        ];
-        return view('gym.subscribe', compact('gym', 'plans'));
+        return view('gym.subscribe', compact('gym'));
     }
 
     public function storeSubscription(Request $request, Gym $gym)
@@ -241,5 +225,20 @@ class GymController extends Controller
         }
 
         return view('findgym', compact('gyms', 'query'));
+    }
+
+    public function viewSubscription()
+    {
+        $user = Auth::user();
+        $gymUser = GymUser::where('user_id', $user->id)->where('status', 'approved')->whereDate('expiration_date', '>', Carbon::now()->format('Y-m-d'))->latest()->first();
+
+        $plan = [];
+
+        if ($gymUser) {
+
+            $plan = Plan::where('gym_id', $gymUser->gym_id)->where('month', $gymUser->plan)->first();
+        }
+
+        return view('user.subscription', compact('gymUser', 'plan'));
     }
 }

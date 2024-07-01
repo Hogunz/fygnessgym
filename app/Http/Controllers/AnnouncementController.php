@@ -84,7 +84,7 @@ class AnnouncementController extends Controller
         //
     }
 
-    public function showAnnouncements()
+    public function userAnnouncements()
     {
         $user = Auth::user();
 
