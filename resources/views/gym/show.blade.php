@@ -42,7 +42,8 @@
     </div>
     <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
         slides-per-view="3" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
-        coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+        coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true" autoplay-delay="2500"
+        autoplay-disable-on-interaction="false" centered-slides="true">
         @foreach ($gym->galleries as $gallery)
             <swiper-slide class="object-cover bg-cover bg-no-repeat">
                 <img src="{{ asset('storage/' . $gallery->image_path) }}" />
