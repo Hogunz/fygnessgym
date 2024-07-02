@@ -70,6 +70,8 @@ class User extends Authenticatable
     {
         $gymUser = $this->subscribeGym()->latest()->first();
 
+        if (!$gymUser) return true;
+
         if ($gymUser->gym_id == $gym->id) {
             $expirationDate = Carbon::parse($gymUser->expiration_date);
             $isExpired = Carbon::now()->greaterThan($expirationDate);

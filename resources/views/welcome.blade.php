@@ -42,59 +42,41 @@
     <div id="gyms"
         class="mt-8 mb-8 mx-auto container grid gap-6 md:grid-cols-4 xl:grid-cols-5 justify-items-center">
         @foreach ($gyms as $gym)
-            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow w-full flex flex-col">
                 <a href="#">
                     <img class="object-cover object-center rounded-lg lg:h-[230px] w-[368px] h-[113px] p-2"
                         src="{{ asset('storage/' . $gym->image) }}" alt="gym" />
                 </a>
-                <div class="p-5">
+                <div class="p-4 flex-grow flex flex-col justify-between">
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
                             {{ $gym->name }}
                         </h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">{{ $gym->description }}</p>
+                    <p class="mb-3 font-normal text-gray-600 dark:text-gray-400  line-clamp-3">
+                        {{ $gym->description }}</p>
                     <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member: @if (isset($subscriptionCounts[$gym->id]))
                             {{ $subscriptionCounts[$gym->id] }}
                         @else
                             0
                         @endif
                     </p>
-                    <a href="{{ route('gyms.showGym', $gym) }}"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
-                        See more
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </a>
+                    <div>
+                        <a href="{{ route('gyms.showGym', $gym) }}"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
+                            See more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         @endforeach
     </div>
-    {{-- <section class="container mx-auto">
-        <div class="font-[500px] text-[42px] pt-[28px] pb-[4px] text-light mx-auto container">Trending Gym Places
-        </div>
-        <div class="mt-8 mb-8 mx-auto container grid grid-cols-4 gap-6">
-            @for ($i = 0; $i < 4; $i++)
-                <div>
-                    <a href="">
-                        <div class="flex flex-col">
-                            <div class="mb-8">
 
-                                <img class="w-[386.641] h-[386.641] object-cover bg-cover rounded-lg"
-                                    src="https://images.unsplash.com/photo-1579616075377-696d66a6e373?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-                            </div>
-                            <div class="text-[16px] leading-[24px] font-[300px] text-light font-brandon">
-                                asdasd
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endfor
-        </div>
-    </section> --}}
     <section class=" container mx-auto ">
         <div class="flex items-center py-9 md:py-12 lg:py-24">
             <section class="bg-cover bg-center py-32 w-full rounded-lg"
