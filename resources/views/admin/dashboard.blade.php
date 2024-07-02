@@ -4,7 +4,7 @@
             <div class="flex justify-between mb-6">
                 <div>
                     <div class="flex items-center mb-1">
-                        <div class="text-2xl font-semibold">{{ $usersCount }}</div>
+                        <div class="text-2xl font-semibold text-red-600">{{ $usersCount }}</div>
                     </div>
                     <div class="text-sm font-medium text-gray-400">User List</div>
                 </div>
@@ -15,7 +15,7 @@
             <div class="flex justify-between mb-4">
                 <div>
                     <div class="flex items-center mb-1">
-                        <div class="text-2xl font-semibold">{{ $trainersCount }}</div>
+                        <div class="text-2xl font-semibold text-red-600">{{ $trainersCount }}</div>
                     </div>
                     <div class="text-sm font-medium text-gray-400">Staff/Trainer List</div>
                 </div>
@@ -25,7 +25,7 @@
         <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl font-semibold mb-1">{{ $announcementsCount }}</div>
+                    <div class="text-2xl font-semibold mb-1 text-red-600">{{ $announcementsCount }}</div>
                     <div class="text-sm font-medium text-gray-400">Number of Announcements Created</div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
         <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
                 <div>
-                    <div class="text-2xl font-semibold mb-1">{{ $gymsCount }}</div>
+                    <div class="text-2xl font-semibold mb-1 text-red-600">{{ $gymsCount }}</div>
                     <div class="text-sm font-medium text-gray-400">Registered Gyms</div>
                 </div>
             </div>

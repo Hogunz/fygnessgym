@@ -38,7 +38,7 @@
                                 <span
                                     class="inline-block py-2 px-4 bg-gray-200 border border-gray-300 border-r-0">+63</span>
                                 <input id="phone_number" class="block w-full py-2 px-4 border border-gray-300 rounded-r"
-                                    type="text" name="phone_number" placeholder="9299021923"
+                                    type="text" name="phone_number" placeholder="9299021923" maxlength="10"
                                     :value="old('phone_number')" required autocomplete="username" />
                             </div>
 

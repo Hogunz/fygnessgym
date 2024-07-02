@@ -1,20 +1,21 @@
 <?php
 
 
+use App\Models\Announcement;
 use App\Models\Ownerdashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\PlanController;
-use App\Models\Announcement;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -76,10 +77,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/showStaff', [TrainerController::class, 'showStaff'])->name('admin.showStaff');
     Route::get('/showUser', [UserController::class, 'showUser'])->name('admin.showUser');
     Route::get('/showAnnouncement', [AnnouncementController::class, 'showAnnouncement'])->name('admin.showAnnouncement');
-    Route::get('/showGym', [GymController::class, 'showAdminGym'])->name('admin.showGym');
-    Route::get('/activity-log', [UserController::class, 'showActivityLog'])->name('admin.showActivityLog');
+
     //admin dashboard
-    Route::get('/admin/dashboard/', [UserController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+    //admin trainer
+    Route::get('/admin/trainer/{trainer}', [AdminController::class, 'editTrainer'])->name('admin.editTrainer');
+    Route::put('/admin/trainer/{trainer}', [AdminController::class, 'updateTrainer'])->name('admin.updateTrainer');
+    Route::delete('/admin/trainer/{trainer}', [AdminController::class, 'deleteTrainer'])->name('admin.deleteTrainer');
+    //admin user
+    Route::get('/admin/user/{user}', [AdminController::class, 'editUser'])->name('admin.editUser');
+    Route::put('/admin/user/{user}', [AdminController::class, 'updateUser'])->name('admin.updateUser');
+    Route::delete('/admin/user/{user}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+    //admin announcement
+    Route::get('/admin/announcement/{announcement}', [AdminController::class, 'editAnnouncement'])->name('admin.editAnnouncement');
+    Route::put('/admin/announcement/{announcement}', [AdminController::class, 'updateAnnouncement'])->name('admin.updateAnnouncement');
+    Route::delete('/admin/announcement/{announcement}', [AdminController::class, 'deleteAnnouncement'])->name('admin.deleteAnnouncement');
+
+    //admin edit gym
+    Route::resource('admin', AdminController::class)->parameters([
+        'admin' => 'gym',
+    ]);
+
+
+    Route::get('/activity-log', [UserController::class, 'showActivityLog'])->name('admin.showActivityLog');
+
 
     //user
     Route::get('user/tasks/show', [TaskController::class, 'viewTask'])->name('user.viewTasks');

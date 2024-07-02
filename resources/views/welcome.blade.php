@@ -39,12 +39,13 @@
 
     <div class="font-[500px] text-[42px] pb-[18px] pt-[50px] text-light mx-auto container text-white">Exclusives
     </div>
-    <div id="gyms" class="mt-8 mb-8 mx-auto container grid grid-cols-5 gap-6">
+    <div id="gyms"
+        class="mt-8 mb-8 mx-auto container grid gap-6 md:grid-cols-4 xl:grid-cols-5 justify-items-center">
         @foreach ($gyms as $gym)
             <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
                 <a href="#">
-                    <img class="object-scale-down h-48 w-96 p-2" src="{{ asset('storage/' . $gym->image) }}"
-                        alt="gym" />
+                    <img class="object-cover object-center rounded-lg lg:h-[230px] w-[368px] h-[113px] p-2"
+                        src="{{ asset('storage/' . $gym->image) }}" alt="gym" />
                 </a>
                 <div class="p-5">
                     <a href="#">

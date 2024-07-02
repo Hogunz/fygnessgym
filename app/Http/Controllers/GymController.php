@@ -48,7 +48,7 @@ class GymController extends Controller
             'description' => 'required|string|max:255',
             'email' => 'required|email',
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
+            'phone' => 'required|regex:/^[0-9]+$/|max:11|digits:10',
             'gallery' => 'required|array',
             'gallery.*' => 'image',
             'google_map_link' => 'nullable|string',
@@ -171,6 +171,7 @@ class GymController extends Controller
         return view('gym.show', compact('gym', 'inclusions', 'programs'));
     }
 
+
     public function subscribeGym(Gym $gym)
     {
         $user = Auth::user();
@@ -224,6 +225,9 @@ class GymController extends Controller
         $gyms = Gym::all();
         return view('admin.gyms', compact('gyms'));
     }
+
+
+
     public function searchGym(Request $request)
     {
         $query = $request->input('query');

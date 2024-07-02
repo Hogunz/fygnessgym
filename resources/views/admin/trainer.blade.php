@@ -35,8 +35,16 @@
                             {{ $trainer->position }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#"
+                            <a href="{{ route('admin.editTrainer', $trainer) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                        <td class="flex items-center px-6 py-4">
+                            <form action="{{ route('admin.deleteTrainer', $trainer) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button
+                                    class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

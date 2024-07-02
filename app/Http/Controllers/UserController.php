@@ -26,7 +26,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required'],
             'email' => ['email', 'required'],
-            'phone_number' => ['required', 'size:10'],
+            'phone_number' => ['required', 'size:10', 'digits:10', 'regex:/^[0-9]+$/'],
             'owner' => ['nullable'],
             'password' => ['required', 'confirmed'],
         ]);
@@ -64,14 +64,7 @@ class UserController extends Controller
         $users = User::all();
         return view('admin.user', compact('users'));
     }
-    public function adminDashboard()
-    {
-        $usersCount = User::count();
-        $announcementsCount = Announcement::count();
-        $trainersCount = Trainer::count();
-        $gymsCount = Gym::count();
-        return view('admin.dashboard', compact('usersCount', 'announcementsCount', 'trainersCount', 'gymsCount'));
-    }
+
     public function showActivityLog()
     {
         $activities = ActivityLog::with('user')->latest()->get();
