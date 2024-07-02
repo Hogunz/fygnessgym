@@ -9,7 +9,7 @@
                     <div class="text-sm font-medium text-gray-400">User List</div>
                 </div>
             </div>
-            <a href="" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+
         </div>
         <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
             <div class="flex justify-between mb-4">
@@ -20,7 +20,7 @@
                     <div class="text-sm font-medium text-gray-400">Staff/Trainer List</div>
                 </div>
             </div>
-            <a href="" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+
         </div>
         <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
@@ -29,7 +29,7 @@
                     <div class="text-sm font-medium text-gray-400">Number of Announcements Created</div>
                 </div>
             </div>
-            <a href="" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+
         </div>
         <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
             <div class="flex justify-between mb-6">
@@ -38,7 +38,7 @@
                     <div class="text-sm font-medium text-gray-400">Registered Gyms</div>
                 </div>
             </div>
-            <a href="" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+
         </div>
     </div>
 
