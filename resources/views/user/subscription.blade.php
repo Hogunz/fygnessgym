@@ -11,24 +11,26 @@
             </div>
         @endif
         <h2 class="mb-4 text-xl font-bold text-white">My Subscription Details</h2>
+        <div class="text-yellow-300 flex flex-col justify-between">
+            @if ($plan)
+                <div class="text-white text-2xl">
+                    {{ $plan->title }}
+                </div>
 
-        @if ($plan)
-            <div>
-                {{ $plan->title }}
-            </div>
+                <div class="text-xl font-bold">
+                    {{ $plan->month }} Month
+                </div>
 
-            <div>
-                {{ $plan->month }} Month
-            </div>
+                <div class="text-white font-base ml-4">
+                    <ul class="list-disc">
 
-            <div>
-                <ul class="list-disc">
-
-                    @foreach ($plan->description as $description)
-                        <li>{{ $description }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+                        @foreach ($plan->description as $description)
+                            <li>{{ $description }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
     </div>
+
 </x-app-layout>
