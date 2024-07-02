@@ -23,18 +23,19 @@
             <p class="text-yellow-300 text-3xl">No gyms found.</p>
         @else
             @foreach ($gyms as $gym)
-                <div
-                    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow w-full flex flex-col">
                     <a href="#">
-                        <img class="rounded-t-lg object-scale-down h-52 w-96 p-2 "
-                            src="{{ asset('storage/' . $gym->image) }}" alt="" />
+                        <img class="object-cover object-center rounded-lg lg:h-[230px] w-[368px] h-[113px] p-2"
+                            src="{{ asset('storage/' . $gym->image) }}" alt="gym" />
                     </a>
-                    <div class="p-5">
+                    <div class="p-4 flex-grow flex flex-col justify-between">
                         <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                {{ $gym->name }}</h5>
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
+                                {{ $gym->name }}
+                            </h5>
                         </a>
-                        <p class="mb-3 font-normal text-gray-600 dark:text-gray-400">{{ $gym->description }}</p>
+                        <p class="mb-3 font-normal text-gray-600 dark:text-gray-400  line-clamp-3">
+                            {{ $gym->description }}</p>
                         <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:
                             @if (isset($subscriptionCounts[$gym->id]))
                                 {{ $subscriptionCounts[$gym->id] }}
@@ -42,15 +43,17 @@
                                 0
                             @endif
                         </p>
-                        <a href="{{ route('gyms.showGym', $gym) }}"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
-                            See more
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </a>
+                        <div>
+                            <a href="{{ route('gyms.showGym', $gym) }}"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white border rounded border-[#623AA5] bg-[#623AA5]  hover:bg-[#623AA5]/75 hover:text-light focus:outline-none focus:ring active:text-opacity-75 transition duration-300 ease-in-out">
+                                See more
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             @endforeach
