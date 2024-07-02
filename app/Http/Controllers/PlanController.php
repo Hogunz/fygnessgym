@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Gym;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
@@ -13,7 +15,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = Plan::all();
+        $gyms = Auth::user()->gyms->pluck('id');
+        $plans = Plan::whereIn('gym_id', $gyms)->get();
         return view('owner.plans.index', compact('plans'));
     }
 
@@ -22,7 +25,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $gyms = Gym::all();
+        $gyms = Auth::user()->gyms;
 
         return view('owner.plans.create', compact('gyms'));
     }
@@ -36,7 +39,9 @@ class PlanController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'gym_id' => ['required'],
-            'month' => ['required', 'unique:plans,month'],
+            'month' => ['required', Rule::unique('plans')->where(function ($query) use ($request) {
+                return $query->where('gym_id', $request->gym_id);
+            })],
             'title' => ['required'],
             'description' => ['required', 'array']
         ]);
