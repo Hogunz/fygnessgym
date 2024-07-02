@@ -13,13 +13,15 @@
 
                 @foreach ($gym->plans as $plan)
                     <div
-                        class="flex flex-col p-6 mx-auto max-w-lg text-center border-transparent bg-gray-700 text-white rounded-3xl h-full">
+                        class="flex flex-col p-6 mx-auto max-w-lg text-center border-transparent bg-gray-700 text-white rounded-3xl h-full w-full justify-between">
                         <h3 class="mb-4 text-2xl font-semibold">{{ $plan->title }}</h3>
-                        <ul class="font-light sm:text-lg text-white list-disc">
-                            @foreach ($plan->description as $description)
-                                <li>{{ $description }}</li>
-                            @endforeach
-                        </ul>
+                        <div class=" px-8 h-full">
+                            <ul class="font-light sm:text-lg text-white list-disc">
+                                @foreach ($plan->description as $description)
+                                    <li>{{ $description }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         <div class="flex justify-center items-baseline my-8">
                             <span class="mr-2 text-5xl font-extrabold">{{ $plan->month }}</span>
                             <span class="text-white">/month</span>

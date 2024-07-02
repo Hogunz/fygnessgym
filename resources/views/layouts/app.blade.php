@@ -58,7 +58,7 @@
                     @include('layouts.user-sidebar')
                 @endhasanyrole
             </header>
-            <main class=" mx-auto max-w-7xl">
+            <main class="max-w-[800px] ml-80">
                 {{ $slot }}
             </main>
         </div>
