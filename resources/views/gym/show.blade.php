@@ -28,7 +28,7 @@
                     </a>
                 @else
                     <div>
-                        {{ auth()->user()->subscribeGym()->where('gym_id', $gym->id)->latest()->first()->status }}
+                        {{ auth()->user()->subscriptionStatus($gym) }}
                     </div>
                 @endif
             @endif

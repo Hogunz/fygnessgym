@@ -64,26 +64,36 @@ class User extends Authenticatable
         return $this->hasMany(GymUser::class);
     }
 
+
+
     public function isNotSubscribed(Gym $gym)
     {
-        $gymUser = $this->subscribeGym()->where('gym_id', $gym->id)->latest()->first();
+        $gymUser = $this->subscribeGym()->latest()->first();
 
-        // Check if $gymUser is null before accessing its properties
-        if ($gymUser === null) {
-            return true;
+        if ($gymUser->gym_id == $gym->id) {
+            $expirationDate = Carbon::parse($gymUser->expiration_date);
+            $isExpired = Carbon::now()->greaterThan($expirationDate);
+
+            if ($isExpired) {
+                return true;
+            }
         }
 
-        if ($gymUser->status == 'pending') {
-            return false;
-        }
-
-        $expirationDate = Carbon::parse($gymUser->expiration_date);
-        $isExpired = Carbon::now()->greaterThan($expirationDate);
-
-        if ($isExpired) {
-            return true;
-        }
+        if ($gymUser == null) return true;
 
         return false;
+    }
+
+    public function subscriptionStatus(Gym $gym)
+    {
+        $gymUser = $this->subscribeGym()->latest()->first();
+
+        if ($gymUser->gym_id == $gym->id) {
+            if ($gymUser->status == 'pending') return "Pending";
+
+            return "Already Subscribed";
+        } else {
+            return "Subscribed to other gym";
+        }
     }
 }

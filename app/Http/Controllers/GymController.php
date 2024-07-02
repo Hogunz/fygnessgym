@@ -173,12 +173,22 @@ class GymController extends Controller
 
     public function subscribeGym(Gym $gym)
     {
+        $user = Auth::user();
+
+        if (!$user->isNotSubscribed($gym)) {
+            return back();
+        }
+
         return view('gym.subscribe', compact('gym'));
     }
 
     public function storeSubscription(Request $request, Gym $gym)
     {
         $user = Auth::user();
+
+        if (!$user->isNotSubscribed($gym)) {
+            return back();
+        }
 
         // $user->subscribeGym()->attach([$gym->id => ['plan' => $request->month]]);
         GymUser::create([

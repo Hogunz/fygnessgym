@@ -28,7 +28,7 @@
                          </div>
                      @endforeach
                      @if ($announcements->isEmpty())
-                         <p class="text-gray-700 dark:text-gray-300">No tasks found.</p>
+                         <p class="text-white text-2xl">No Announcements found.</p>
                      @endif
                  </div>
              </div>
