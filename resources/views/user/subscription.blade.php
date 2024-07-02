@@ -13,11 +13,11 @@
         <h2 class="mb-4 text-xl font-bold text-white">My Subscription Details</h2>
         <div class="text-yellow-300 flex flex-col justify-between">
             @if ($plan)
-                <div class="text-white text-2xl">
+                <div class="text-white text-2xl font-bold">
                     {{ $plan->title }}
                 </div>
 
-                <div class="text-xl font-bold">
+                <div class="text-xl font-base mb-5">
                     {{ $plan->month }} Month
                 </div>
 
