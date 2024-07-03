@@ -158,11 +158,8 @@ class GymController extends Controller
     public function findAGym()
     {
         $gyms = Gym::all();
-        $subscriptionCounts = [];
-        foreach ($gyms as $gym) {
-            $subscriptionCounts[$gym->id] = GymUser::where('gym_id', $gym->id)->count();
-        }
-        return view('findgym', compact('gyms', 'subscriptionCounts'));
+
+        return view('findgym', compact('gyms'));
     }
     public function showGym(Gym $gym)
     {

@@ -51,9 +51,13 @@ class Gym extends Model
 
     public function setEmbedGoogleMapAttribute($value)
     {
-
         preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $value, $match);
 
         $this->attributes['embed_google_map'] = $match[0][0];
+    }
+
+    public function activeSubscribers()
+    {
+        return $this->hasMany(GymUser::class)->whereDate('expiration_date', '>', date('Y-m-d'));
     }
 }

@@ -88,7 +88,7 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
 
-        $gymOwnersId = $user->subscribeGym->pluck('id');
+        $gymOwnersId = $user->subscribeGym->pluck('gym_id');
 
         $announcements = Announcement::whereIn('gym_id', $gymOwnersId)->get();
 

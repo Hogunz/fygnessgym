@@ -55,11 +55,8 @@
                     </a>
                     <p class="mb-3 font-normal text-gray-600 dark:text-gray-400  line-clamp-3">
                         {{ $gym->description }}</p>
-                    <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member: @if (isset($subscriptionCounts[$gym->id]))
-                            {{ $subscriptionCounts[$gym->id] }}
-                        @else
-                            0
-                        @endif
+                    <p class="mb-3 text-sm font-bold text-gray-700 dark:text-gray-400">Subscribed Member:
+                        {{ $gym->activeSubscribers->count() }}
                     </p>
                     <div>
                         <a href="{{ route('gyms.showGym', $gym) }}"
