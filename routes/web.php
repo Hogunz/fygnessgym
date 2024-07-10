@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/chart/monthly', [GymController::class, 'getMonthlyChartData'])->name('chart.monthly');
         Route::get('/chart/yearly', [GymController::class, 'getYearlyChartData'])->name('chart.yearly');
         Route::get('/chart/daily', [GymController::class, 'getDailyChartData'])->name('chart.daily');
-
+        Route::get('chart/custom', [GymController::class, 'getCustomChartData'])->name('chart.custom');
 
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);

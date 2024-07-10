@@ -46,10 +46,20 @@
                 <option value="monthly">Monthly</option>
                 <option value="yearly">Yearly</option>
                 <option value="daily">Daily</option>
+                <option value="custom">Custom Range</option>
             </select>
+
         </div>
     </div>
-
+    <div class="flex mb-6 hidden" id="customRangeInputs">
+        <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black-5">
+            <label for="fromDate">From:</label>
+            <input type="date" id="fromDate" class="ml-2 px-3 py-1 border rounded-md">
+            <label for="toDate" class="ml-4">To:</label>
+            <input type="date" id="toDate" class="ml-2 px-3 py-1 border rounded-md">
+            <button id="fetchCustomData" class="ml-4 px-4 py-1 bg-blue-500 text-white rounded-md">Fetch Data</button>
+        </div>
+    </div>
     <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black-5">
         <canvas id="myChart" style="background-color: white;"></canvas>
     </div>
@@ -63,7 +73,9 @@
         const ctx = document.getElementById('myChart').getContext('2d');
 
         // Example initial data for the chart (replace with actual fetched data)
-        const initialLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+        const initialLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+            'September', 'October', 'November', 'December'
+        ];
         const initialData = [{{ $subscribedUsersCount }}]; // Ensure this matches your expected data structure
 
         // Create the initial chart
@@ -92,7 +104,28 @@
         document.getElementById('chartType').addEventListener('change', function() {
             const selectedType = this.value;
 
-            // Example logic to update chart based on selected option
+            if (selectedType === 'custom') {
+                document.getElementById('customRangeInputs').classList.remove('hidden');
+            } else {
+                document.getElementById('customRangeInputs').classList.add('hidden');
+                updateChart(selectedType);
+            }
+        });
+
+        // Fetch custom data when Fetch Data button is clicked
+        document.getElementById('fetchCustomData').addEventListener('click', function() {
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
+
+            fetchCustomData(fromDate, toDate).then(data => {
+                myChart.data.labels = data.labels;
+                myChart.data.datasets[0].data = data.values;
+                myChart.update();
+            });
+        });
+
+        // Function to update chart based on selected option or custom date range
+        function updateChart(selectedType) {
             switch (selectedType) {
                 case 'monthly':
                     fetchMonthlyData().then(data => {
@@ -118,9 +151,9 @@
                 default:
                     break;
             }
-        });
+        }
 
-        // Functions to fetch actual data
+        // Functions to fetch actual data (monthly, yearly, daily)
         function fetchMonthlyData() {
             return fetch('{{ route('chart.monthly') }}')
                 .then(response => response.json())
@@ -145,6 +178,19 @@
 
         function fetchDailyData() {
             return fetch('{{ route('chart.daily') }}')
+                .then(response => response.json())
+                .then(data => {
+                    return {
+                        labels: data.labels,
+                        values: data.values
+                    };
+                });
+        }
+
+        // Function to fetch custom range data
+        function fetchCustomData(fromDate, toDate) {
+            const url = `{{ route('chart.custom') }}?from=${fromDate}&to=${toDate}`;
+            return fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     return {

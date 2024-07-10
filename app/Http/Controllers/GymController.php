@@ -220,11 +220,18 @@ class GymController extends Controller
 
     public function getMonthlyChartData()
     {
-        $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $currentYear = date('Y');
+        $labels = [];
         $values = [];
 
-        foreach ($labels as $month) {
-            $count = GymUser::whereMonth('created_at', Carbon::parse($month)->month)->count();
+        // Loop through each month
+        for ($month = 1; $month <= 12; $month++) {
+            $monthName = date('F', mktime(0, 0, 0, $month, 1));
+            $count = GymUser::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $month)
+                ->count();
+
+            $labels[] = "$monthName $currentYear"; // Format: Month Year
             $values[] = $count;
         }
 
@@ -233,6 +240,7 @@ class GymController extends Controller
             'values' => $values,
         ]);
     }
+
     public function getYearlyChartData()
     {
         // Get the current year
@@ -280,6 +288,31 @@ class GymController extends Controller
         ]);
     }
 
+    public function getCustomChartData(Request $request)
+    {
+        $fromDate = Carbon::parse($request->input('from'))->startOfDay();
+        $toDate = Carbon::parse($request->input('to'))->endOfDay();
+
+        $labels = [];
+        $values = [];
+
+        $data = GymUser::whereBetween('created_at', [$fromDate, $toDate])
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d');
+            });
+
+        foreach ($data as $key => $value) {
+            $labels[] = Carbon::parse($key)->format('Y-m-d');
+            $values[] = count($value);
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'values' => $values,
+        ]);
+    }
 
 
 
