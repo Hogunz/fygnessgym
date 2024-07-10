@@ -217,6 +217,72 @@ class GymController extends Controller
 
         return view('owner.dashboard', compact('pendingUsersCount', 'subscribedUsersCount', 'announcementCount'));
     }
+
+    public function getMonthlyChartData()
+    {
+        $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $values = [];
+
+        foreach ($labels as $month) {
+            $count = GymUser::whereMonth('created_at', Carbon::parse($month)->month)->count();
+            $values[] = $count;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'values' => $values,
+        ]);
+    }
+    public function getYearlyChartData()
+    {
+        // Get the current year
+        $currentYear = date('Y');
+
+        // Generate an array of years from the current year to two years ago
+        $labels = [];
+        $values = [];
+
+        for ($i = 0; $i < 3; $i++) {
+            $year = $currentYear - $i;
+            $labels[] = $year;
+            $count = GymUser::whereYear('created_at', $year)->count();
+            $values[] = $count;
+        }
+
+        // Reverse arrays to display in descending order (optional)
+        $labels = array_reverse($labels);
+        $values = array_reverse($values);
+
+        return response()->json([
+            'labels' => $labels,
+            'values' => $values,
+        ]);
+    }
+
+    public function getDailyChartData()
+    {
+        // Array of days of the week
+        $daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        $labels = [];
+        $values = [];
+
+        // Loop through each day of the week
+        foreach ($daysOfWeek as $day) {
+            // Count GymUser records created on the current day of the week
+            $count = GymUser::whereRaw("DAYNAME(created_at) = '$day'")->count();
+            $labels[] = $day;
+            $values[] = $count;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'values' => $values,
+        ]);
+    }
+
+
+
+
     public function showAdminGym()
     {
         $gyms = Gym::all();

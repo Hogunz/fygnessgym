@@ -58,6 +58,10 @@ Route::middleware('auth')->group(function () {
         //check-in users
         Route::get('/users-index', [CustomerController::class, 'usersIndex'])->name('customers.check-in');
         Route::post('/mark-attendance', [CustomerController::class, 'markAttendance'])->name('customers.mark-attendance');
+        Route::get('/chart/monthly', [GymController::class, 'getMonthlyChartData'])->name('chart.monthly');
+        Route::get('/chart/yearly', [GymController::class, 'getYearlyChartData'])->name('chart.yearly');
+        Route::get('/chart/daily', [GymController::class, 'getDailyChartData'])->name('chart.daily');
+
 
         Route::resource('customers', CustomerController::class);
         Route::resource('announcements', AnnouncementController::class);
