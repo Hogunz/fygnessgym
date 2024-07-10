@@ -57,7 +57,9 @@
             <input type="date" id="fromDate" class="ml-2 px-3 py-1 border rounded-md">
             <label for="toDate" class="ml-4">To:</label>
             <input type="date" id="toDate" class="ml-2 px-3 py-1 border rounded-md">
-            <button id="fetchCustomData" class="ml-4 px-4 py-1 bg-blue-500 text-white rounded-md">Fetch Data</button>
+            <button id="fetchCustomData"
+                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Fetch
+                Data</button>
         </div>
     </div>
     <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black-5">
